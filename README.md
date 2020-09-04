@@ -1,5 +1,7 @@
 # XETTER 2020
 
+You need [Joystick Pack](https://assetstore.unity.com/packages/tools/input-management/joystick-pack-107631) to build this.
+
 https://xetter.com/
 
 ---

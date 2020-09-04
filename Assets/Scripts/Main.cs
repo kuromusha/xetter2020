@@ -39,6 +39,7 @@ public class Main : MonoBehaviour
     public Sprite spriteMyb;
     public Sprite spriteT1b;
     public Sprite spriteT2b;
+    public Joystick joystick;
 
     bool action;
     char[,,] sceneMap;
@@ -264,6 +265,19 @@ public class Main : MonoBehaviour
                         int dMyPosX = 0, dMyPosY = 0;
                         Sprite sprite = null;
 
+                        if (inX == 0 && inY == 0)
+                        {
+                            inX = joystick.Horizontal;
+                            inY = joystick.Vertical;
+                            if (Mathf.Abs(inX) > Mathf.Abs(inY))
+                            {
+                                inY = 0;
+                            }
+                            else
+                            {
+                                inX = 0;
+                            }
+                        }
                         if (inX < 0)
                         {
                             if (myPosX > 0)
