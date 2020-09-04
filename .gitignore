@@ -58,3 +58,6 @@ sysinfo.txt
 # Crashlytics generated file
 crashlytics-build.properties
 
+# Assets download from Unity Asset Store
+Assets/Joystick Pack.meta
+Assets/Joystick Pack/
