@@ -52,25 +52,24 @@ public class Common : MonoBehaviour
     public const int MAX_T2_NUM = 4;
     public const int MAX_BLOCK_NUM = 15;
     public const int INITIAL_MY_NUMBER = 5;
-    public const int DISPLAY_WIDTH = 320;
-    public const int DISPLAY_HEIGHT = 320;
     public const int WIDTH = 40;
     public const int HEIGHT = 25;
     public const int X_BAR_1ST = 17;
     public const int X_BAR_2ND = 27;
-    public const int DISPLAY_OFFSET_X = -160;
-    public const int DIDPLAY_OFFSET_Y = 120;
+    public const int SPRITE_SCALE = 4;
+    public const int DISPLAY_OFFSET_X = -160 * SPRITE_SCALE;
+    public const int DIDPLAY_OFFSET_Y = 120 * SPRITE_SCALE;
     public const int INNER_HIGHT = 20;
     public const int INNER_WIDTH = 38;
     public const int INITIAL_TIME = 1500;
-    public const int SPRITE_UNIT_SIZE = 8;
+    public const int SPRITE_UNIT_SIZE = 8 * SPRITE_SCALE;
     public const int MAP_OFFSET_X = 1;
     public const int MAP_OFFSET_Y = 4;
     public const int SORTING_ORDER_MY = 1;
     public const int SORTING_ORDER_OTHERS = 0;
 
     public const float DURATION = 0.1f;
-    public const float WAIT_GAMEOVER = 3.0f;
+    public const float WAIT_GAMEOVER = 3f;
 
     public enum STATUS
     {
@@ -80,6 +79,20 @@ public class Common : MonoBehaviour
         GAMEOVER,
         WAIT2QUIT,
         WAIT4EVER
+    }
+
+    const int DEFAULT_ORTHOGRAPHIC_SIZE = 160 * SPRITE_SCALE;
+    static int lastScreenWidth, lastScreenHeight;
+
+    public static void AdjustScreen(bool initilize = false)
+    {
+        if (initilize || lastScreenWidth != Screen.width || lastScreenHeight != Screen.height)
+        {
+            Camera.main.orthographicSize = Common.DEFAULT_ORTHOGRAPHIC_SIZE
+                * (Screen.width >= Screen.height ? 1 : (float)Screen.height / Screen.width);
+            lastScreenWidth = Screen.width;
+            lastScreenHeight = Screen.height;
+        }
     }
 
     public static readonly string[,] sceneData = new string[,]

@@ -26,13 +26,19 @@ public class Title : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Screen.SetResolution(Common.DISPLAY_WIDTH, Common.DISPLAY_HEIGHT, true);
         startScene = PlayerPrefs.GetInt(Common.SAVEDATA_START_SCENE, 1);
         maxStartScene = System.Math.Min(PlayerPrefs.GetInt(Common.SAVEDATA_MAX_SCENE, 1), Common.MAX_SCENE);
         text = GameObject.Find(Common.TEXT_START_SCENE);
         buttonUp = GameObject.Find(Common.BUTTON_UP).GetComponent<Button>();
         buttonDown = GameObject.Find(Common.BUTTON_DOWN).GetComponent<Button>();
         RewriteStartScene();
+        Common.AdjustScreen(true);
+    }
+
+    // Update is called once per frame
+    private void Update()
+    {
+        Common.AdjustScreen();
     }
 
     public void OnClickStart()
