@@ -23,7 +23,7 @@ public class Main : MonoBehaviour
     // share with other classes
     public static int leftMyNumber, score;
 
-    // mapped on Inspector 
+    // mapped on Inspector
     public AudioSource audioBad;
     public AudioSource audioBgm;
     public AudioSource audioClear;
@@ -47,7 +47,8 @@ public class Main : MonoBehaviour
     int highScore, scene, time, dotNum, myPosX, myPosY, playingHit, afterHit;
     Button resratButton;
     Common.STATUS status;
-    GameObject textHiScore, textScore, textScene, textTime, textGameOver, textCongratulations;
+    Text textHiScore, textScore, textTime;
+    GameObject textGameOver, textCongratulations;
     GameObject[,] objScene;
     IDictionary<char, GameObject> objDictionary;
     IDictionary<char, int> numDictionary;
@@ -82,10 +83,9 @@ public class Main : MonoBehaviour
             }
         }
         action = false;
-        textHiScore = GameObject.Find(Common.TEXT_HI_SCORE);
-        textScore = GameObject.Find(Common.TEXT_SCORE);
-        textScene = GameObject.Find(Common.TEXT_SCENE);
-        textTime = GameObject.Find(Common.TEXT_TIME);
+        textHiScore = GameObject.Find(Common.TEXT_HI_SCORE).GetComponentInChildren<Text>();
+        textScore = GameObject.Find(Common.TEXT_SCORE).GetComponentInChildren<Text>();
+        textTime = GameObject.Find(Common.TEXT_TIME).GetComponentInChildren<Text>();
         textGameOver = GameObject.Find(Common.TEXT_GAME_OVER);
         textCongratulations = GameObject.Find(Common.TEXT_CONGRATURATIUONS);
         resratButton = GameObject.Find(Common.BUTTON_RESTART).GetComponent<Button>();
@@ -99,11 +99,11 @@ public class Main : MonoBehaviour
 
         // scene
         scene = PlayerPrefs.GetInt(Common.SAVEDATA_START_SCENE, 1);
-        textScene.GetComponentInChildren<Text>().text = $"{scene}";
+        GameObject.Find(Common.TEXT_SCENE).GetComponentInChildren<Text>().text = $"{scene}";
 
         // time
         time = Common.INITIAL_TIME;
-        textTime.GetComponentInChildren<Text>().text = $"{time}";
+        textTime.text = $"{time}";
 
         // sptites
         objDictionary = new Dictionary<char, GameObject>();
@@ -149,9 +149,10 @@ public class Main : MonoBehaviour
             }
         }
 
-        // hide unnecessary texts
+        // hide unnecessary texts and adjust screen
         textGameOver.SetActive(false);
         textCongratulations.SetActive(false);
+        Common.AdjustScreen(true);
     }
 
     void DisplayScore()
@@ -161,8 +162,8 @@ public class Main : MonoBehaviour
             highScore = score;
             PlayerPrefs.SetInt(Common.SAVEDATA_HISH_SCORE, highScore);
         }
-        textHiScore.GetComponentInChildren<Text>().text = $"{highScore}";
-        textScore.GetComponentInChildren<Text>().text = $"{score}";
+        textHiScore.text = $"{highScore}";
+        textScore.text = $"{score}";
     }
 
     void Display(char character, int x, int y, bool inner = false)
@@ -201,16 +202,18 @@ public class Main : MonoBehaviour
         if (character != Common.MAP_SPACE)
         {
             GameObject obj = objDictionary[character];
-            float dw = obj.GetComponent<SpriteRenderer>().bounds.size.x / 2;
-            float dh = obj.GetComponent<SpriteRenderer>().bounds.size.y / 2;
-            for (int i = 0; i < Common.SPRITE_UNIT_SIZE / dw; i++)
+            bool smallCahacter = character == Common.MAP_WALL || character == Common.MAP_DOT;
+            int diff = Common.SPRITE_UNIT_SIZE / (smallCahacter ? 2 : 1);
+            int loopNum = smallCahacter ? 2 : 1;
+            for (int i = 0; i < loopNum; i++)
             {
-                for (int j = 0; j < Common.SPRITE_UNIT_SIZE / dh; j++)
+                for (int j = 0; j < loopNum ; j++)
                 {
                     GameObject tmpObj = Instantiate(obj, new Vector3(
-                        Common.DISPLAY_OFFSET_X + (x + (inner ? Common.MAP_OFFSET_X : 0) + i) * Common.SPRITE_UNIT_SIZE + dw,
-                        Common.DIDPLAY_OFFSET_Y - (y + (inner ? Common.MAP_OFFSET_Y : 0) + j) * Common.SPRITE_UNIT_SIZE - dh,
+                        Common.DISPLAY_OFFSET_X + (x + (inner ? Common.MAP_OFFSET_X : 0) + i) * Common.SPRITE_UNIT_SIZE + diff,
+                        Common.DIDPLAY_OFFSET_Y - (y + (inner ? Common.MAP_OFFSET_Y : 0) + j) * Common.SPRITE_UNIT_SIZE - diff,
                         0), Quaternion.identity);
+                    tmpObj.transform.localScale = new Vector3(Common.SPRITE_SCALE, Common.SPRITE_SCALE, 1);
                     if (!inner)
                     {
                         return;
@@ -225,6 +228,7 @@ public class Main : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Common.AdjustScreen();
         timeElapsed += Time.deltaTime;
         switch (status)
         {
@@ -482,7 +486,7 @@ public class Main : MonoBehaviour
                     }
 
                     // time
-                    textTime.GetComponentInChildren<Text>().text = $"{--time}";
+                    textTime.text = $"{--time}";
                     if (time <= 0)
                     {
                         Bad();
