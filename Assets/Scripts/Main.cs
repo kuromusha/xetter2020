@@ -23,37 +23,49 @@ public class Main : MonoBehaviour
     // share with other classes
     public static int leftMyNumber, score;
 
-    // mapped on Inspector
-    public AudioSource audioBad;
-    public AudioSource audioBgm;
-    public AudioSource audioClear;
-    public AudioSource audioGameOver;
-    public AudioSource audioHit;
-    public Sprite spriteMyd;
-    public Sprite spriteMyu;
-    public Sprite spriteMyl1;
-    public Sprite spriteMyl2;
-    public Sprite spriteMyr1;
-    public Sprite spriteMyr2;
-    public Sprite spriteMyc;
-    public Sprite spriteMyb;
-    public Sprite spriteT1b;
-    public Sprite spriteT2b;
-    public Joystick joystick;
+    [SerializeField] AudioSource audioBad = null;
+    [SerializeField] AudioSource audioBgm = null;
+    [SerializeField] AudioSource audioClear = null;
+    [SerializeField] AudioSource audioGameOver = null;
+    [SerializeField] AudioSource audioHit = null;
+    [SerializeField] Button restartButton = null;
+    [SerializeField] Button quitButton = null;
+    [SerializeField] Canvas canvas = null;
+    [SerializeField] GameObject controllerMoveButton = null;
+    [SerializeField] GameObject simpleInput = null;
+    [SerializeField] GameObject textCongratulations = null;
+    [SerializeField] GameObject textGameOver = null;
+    [SerializeField] Sprite spriteBlock = null;
+    [SerializeField] Sprite spriteDot = null;
+    [SerializeField] Sprite spriteMyb = null;
+    [SerializeField] Sprite spriteMyc = null;
+    [SerializeField] Sprite spriteMyd = null;
+    [SerializeField] Sprite spriteMyl1 = null;
+    [SerializeField] Sprite spriteMyl2 = null;
+    [SerializeField] Sprite spriteMyr1 = null;
+    [SerializeField] Sprite spriteMyr2 = null;
+    [SerializeField] Sprite spriteMyu = null;
+    [SerializeField] Sprite spriteT1 = null;
+    [SerializeField] Sprite spriteT1b = null;
+    [SerializeField] Sprite spriteT2 = null;
+    [SerializeField] Sprite spriteT2b = null;
+    [SerializeField] Sprite spriteWall = null;
+    [SerializeField] Text textControllerMove = null;
+    [SerializeField] Text textHiScore = null;
+    [SerializeField] Text textSence = null;
+    [SerializeField] Text textScore = null;
+    [SerializeField] Text textTime = null;
 
     bool action;
     char[,,] sceneMap;
     float timeElapsed;
-    int highScore, scene, time, dotNum, myPosX, myPosY, playingHit, afterHit;
-    Button resratButton;
+    int highScore, scene, time, dotNum, myPosX, myPosY, playingHit, afterHit, lastScreenWidth, lastScreenHeight;
     Common.STATUS status;
-    Text textHiScore, textScore, textTime;
-    GameObject textGameOver, textCongratulations;
-    GameObject[,] objScene;
-    IDictionary<char, GameObject> objDictionary;
+    Image[,] objScene;
+    IDictionary<char, Sprite> objDictionary;
     IDictionary<char, int> numDictionary;
     IDictionary<char, int[,]> posDictionary;
-    IList<GameObject> objHit;
+    IList<Image> objHit;
 
     // Start is called before the first frame update
     void Start()
@@ -83,15 +95,9 @@ public class Main : MonoBehaviour
             }
         }
         action = false;
-        textHiScore = GameObject.Find(Common.TEXT_HI_SCORE).GetComponentInChildren<Text>();
-        textScore = GameObject.Find(Common.TEXT_SCORE).GetComponentInChildren<Text>();
-        textTime = GameObject.Find(Common.TEXT_TIME).GetComponentInChildren<Text>();
-        textGameOver = GameObject.Find(Common.TEXT_GAME_OVER);
-        textCongratulations = GameObject.Find(Common.TEXT_CONGRATURATIUONS);
-        resratButton = GameObject.Find(Common.BUTTON_RESTART).GetComponent<Button>();
         sceneMap = new char[Common.WIDTH, Common.HEIGHT, 2];
-        objScene = new GameObject[Common.WIDTH, Common.HEIGHT];
-        objHit = new List<GameObject>();
+        objScene = new Image[Common.WIDTH, Common.HEIGHT];
+        objHit = new List<Image>();
 
         // hi score & score
         highScore = PlayerPrefs.GetInt(Common.SAVEDATA_HISH_SCORE, 0);
@@ -99,20 +105,20 @@ public class Main : MonoBehaviour
 
         // scene
         scene = PlayerPrefs.GetInt(Common.SAVEDATA_START_SCENE, 1);
-        GameObject.Find(Common.TEXT_SCENE).GetComponentInChildren<Text>().text = $"{scene}";
+        textSence.text = $"{scene}";
 
         // time
         time = Common.INITIAL_TIME;
         textTime.text = $"{time}";
 
         // sptites
-        objDictionary = new Dictionary<char, GameObject>();
-        objDictionary[Common.MAP_MY] = (GameObject)Resources.Load(Common.ASSET_MYD);
-        objDictionary[Common.MAP_WALL] = (GameObject)Resources.Load(Common.ASSET_WALL);
-        objDictionary[Common.MAP_BLOCK] = (GameObject)Resources.Load(Common.ASSET_BLOCK);
-        objDictionary[Common.MAP_DOT] = (GameObject)Resources.Load(Common.ASSET_DOT);
-        objDictionary[Common.MAP_T1] = (GameObject)Resources.Load(Common.ASSET_T1);
-        objDictionary[Common.MAP_T2] = (GameObject)Resources.Load(Common.ASSET_T2);
+        objDictionary = new Dictionary<char, Sprite>();
+        objDictionary[Common.MAP_MY] = spriteMyd;
+        objDictionary[Common.MAP_WALL] = spriteWall;
+        objDictionary[Common.MAP_BLOCK] = spriteBlock;
+        objDictionary[Common.MAP_DOT] = spriteDot;
+        objDictionary[Common.MAP_T1] = spriteT1;
+        objDictionary[Common.MAP_T2] = spriteT2;
 
         // left my number
         for (int i = 0; i < leftMyNumber - 1; i++)
@@ -152,7 +158,7 @@ public class Main : MonoBehaviour
         // hide unnecessary texts and adjust screen
         textGameOver.SetActive(false);
         textCongratulations.SetActive(false);
-        Common.AdjustScreen(true);
+        AdjustScreen(true);
     }
 
     void DisplayScore()
@@ -201,25 +207,26 @@ public class Main : MonoBehaviour
         // display character
         if (character != Common.MAP_SPACE)
         {
-            GameObject obj = objDictionary[character];
-            bool smallCahacter = character == Common.MAP_WALL || character == Common.MAP_DOT;
-            int diff = Common.SPRITE_UNIT_SIZE / (smallCahacter ? 2 : 1);
-            int loopNum = smallCahacter ? 2 : 1;
+            int loopNum = character == Common.MAP_WALL || character == Common.MAP_DOT ? 2 : 1;
+            int size = Common.SPRITE_UNIT_SIZE * (3 - loopNum);
+            int diff = size / 2;
             for (int i = 0; i < loopNum; i++)
             {
                 for (int j = 0; j < loopNum ; j++)
                 {
-                    GameObject tmpObj = Instantiate(obj, new Vector3(
+                    GameObject tmpObj = new GameObject();
+                    Image image = tmpObj.AddComponent<Image>();
+                    image.sprite = objDictionary[character];
+                    image.transform.SetParent(canvas.transform, false);
+                    image.transform.localPosition = new Vector3(
                         Common.DISPLAY_OFFSET_X + (x + (inner ? Common.MAP_OFFSET_X : 0) + i) * Common.SPRITE_UNIT_SIZE + diff,
-                        Common.DIDPLAY_OFFSET_Y - (y + (inner ? Common.MAP_OFFSET_Y : 0) + j) * Common.SPRITE_UNIT_SIZE - diff,
-                        0), Quaternion.identity);
-                    tmpObj.transform.localScale = new Vector3(Common.SPRITE_SCALE, Common.SPRITE_SCALE, 1);
+                        Common.DIDPLAY_OFFSET_Y - (y + (inner ? Common.MAP_OFFSET_Y : 0) + j) * Common.SPRITE_UNIT_SIZE - diff, 0);
+                    image.GetComponent<RectTransform>().sizeDelta = new Vector2(size, size);
                     if (!inner)
                     {
                         return;
                     }
-                    tmpObj.GetComponent<SpriteRenderer>().sortingOrder = Common.SORTING_ORDER_OTHERS;
-                    objScene[x + i, y + j] = tmpObj;
+                    objScene[x + i, y + j] = image;
                 }
             }
         }
@@ -228,7 +235,7 @@ public class Main : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Common.AdjustScreen();
+        AdjustScreen();
         timeElapsed += Time.deltaTime;
         switch (status)
         {
@@ -253,9 +260,9 @@ public class Main : MonoBehaviour
                         return;
                     }
                     // clear hit enemies
-                    foreach (GameObject obj in objHit)
+                    foreach (Image obj in objHit)
                     {
-                        obj.SetActive(false);
+                        obj.enabled = false;
                     }
                     objHit.Clear();
                 }
@@ -271,8 +278,8 @@ public class Main : MonoBehaviour
 
                         if (inX == 0 && inY == 0)
                         {
-                            inX = joystick.Horizontal;
-                            inY = joystick.Vertical;
+                            inX = SimpleInput.GetAxis("Horizontal");
+                            inY = SimpleInput.GetAxis("Vertical");
                             if (Mathf.Abs(inX) > Mathf.Abs(inY))
                             {
                                 inY = 0;
@@ -316,7 +323,7 @@ public class Main : MonoBehaviour
                         }
                         if (sprite != null)
                         {
-                            objScene[myPosX, myPosY].GetComponent<SpriteRenderer>().sprite = sprite;
+                            objScene[myPosX, myPosY].sprite = sprite;
                         }
                         if (dMyPosX != 0 || dMyPosY != 0)
                         {
@@ -352,7 +359,7 @@ public class Main : MonoBehaviour
                             score += 1000;
                             DisplayScore();
                             // wait until audioClear ends
-                            resratButton.interactable = false;
+                            restartButton.interactable = false;
                             audioBgm.Stop();
                             audioClear.Play();
                             status = Common.STATUS.CLEAR;
@@ -373,7 +380,7 @@ public class Main : MonoBehaviour
                             if (sceneMap[x, y + 2, 0] == Common.MAP_MY ||
                                 sceneMap[x + 1, y + 2, 0] == Common.MAP_MY)
                             {
-                                objScene[myPosX, myPosY].GetComponent<SpriteRenderer>().sprite = spriteMyb;
+                                objScene[myPosX, myPosY].sprite = spriteMyb;
                                 Move(myPosX, myPosY, 0, 1, true);
                                 badFlag = true;
                             }
@@ -388,8 +395,7 @@ public class Main : MonoBehaviour
                                     int tx = posDictionary[character][id, 0];
                                     int ty = posDictionary[character][id, 1];
                                     objHit.Add(objScene[tx, ty]);
-                                    objScene[tx, ty].GetComponent<SpriteRenderer>().sprite =
-                                        character == Common.MAP_T1 ? spriteT1b : spriteT2b;
+                                    objScene[tx, ty].sprite = character == Common.MAP_T1 ? spriteT1b : spriteT2b;
                                     Move(tx, ty, 0, 1, true);
                                     posDictionary[character][id, 0] = -1;
                                     posDictionary[character][id, 1] = -1;
@@ -546,19 +552,18 @@ public class Main : MonoBehaviour
 
     void Bad(bool redraw = true)
     {
-        resratButton.interactable = false;
+        restartButton.interactable = false;
         if (redraw)
         {
-            SpriteRenderer renderer = objScene[myPosX, myPosY].GetComponent<SpriteRenderer>();
-            renderer.sprite = spriteMyc;
-            renderer.sortingOrder = Common.SORTING_ORDER_MY;
+            objScene[myPosX, myPosY].sprite = spriteMyc;
+            objScene[myPosX, myPosY].transform.SetAsLastSibling();
         }
         audioBgm.Stop();
         audioBad.Play();
         status = Common.STATUS.BAD;
     }
 
-    void DecreaseLeftMyNumber(bool restartButton = false)
+    void DecreaseLeftMyNumber(bool fromRestartButton = false)
     {
         if (--leftMyNumber > 0)
         {
@@ -567,9 +572,9 @@ public class Main : MonoBehaviour
         }
         else
         {
-            if (restartButton)
+            if (fromRestartButton)
             {
-                resratButton.interactable = false;
+                restartButton.interactable = false;
                 audioBgm.Stop();
             }
             audioGameOver.Play();
@@ -595,7 +600,7 @@ public class Main : MonoBehaviour
             {
                 if (objScene[i, j] != null)
                 {
-                    objScene[i, j].SetActive(false);
+                    objScene[i, j].enabled = false;
                 }
             }
         }
@@ -618,7 +623,7 @@ public class Main : MonoBehaviour
                     case Common.MAP_DOT:
                         dotNum--;
                         score += 10;
-                        objScene[x + i, y + j].SetActive(false);
+                        objScene[x + i, y + j].enabled = false;
                         break;
                 }
             }
@@ -657,12 +662,10 @@ public class Main : MonoBehaviour
         int deletedY = y + (dy < 0 ? 1 : 0);
         char character = sceneMap[x, y, 0];
         char id = sceneMap[x, y, 1];
-        Vector3 objSize = objScene[x, y].GetComponent<SpriteRenderer>().bounds.size;
-        Vector3 pos = objScene[x, y].transform.position;
+        Vector3 objSize = objScene[x, y].sprite.bounds.size * Common.SPRITE_SCALE;
 
-        pos.x += dx * objSize.x / 2;
-        pos.y -= dy * objSize.y / 2;
-        objScene[x, y].transform.position = pos;
+        objScene[x, y].transform.position += new Vector3(dx * objSize.x / 2, -dy * objSize.y / 2, 0);
+        objScene[x, y].GetComponent<RectTransform>().sizeDelta = new Vector2(objSize.x, objSize.y);
         objScene[newX, newY] = objScene[x, y];
         objScene[x, y] = null;
         if (crushed)
@@ -731,5 +734,48 @@ public class Main : MonoBehaviour
         }
 
         return result;
+    }
+
+    void AdjustScreen(bool force = false)
+    {
+        if (force || lastScreenWidth != Screen.width || lastScreenHeight != Screen.height)
+        {
+            float ratio = (float)Screen.height / Screen.width;
+            if (ratio <= Common.SCREEN_ADJUST_THRESHOLD)
+            {
+                bool controllerLeft = PlayerPrefs.GetInt(Common.SAVEDATA_CONTROLLER_POSITION, 0) == 0;
+                Vector3 xDirection = new Vector3(controllerLeft ? 1 : -1, 1, 1);
+
+                quitButton.transform.localPosition = Vector3.Scale(Common.POS_LANDSCAPE_QUIT, xDirection);
+                restartButton.transform.localPosition = Vector3.Scale(Common.POS_LANDSCAPE_RESTART, xDirection);
+                controllerMoveButton.transform.localPosition = Vector3.Scale(Common.POS_LANDSCAPE_CONTROLLER_MOVE, xDirection);
+                simpleInput.transform.localPosition = Vector3.Scale(Common.POS_LANDSCAPE_JOYSTICK, xDirection);
+                textControllerMove.text = "CONTROLLER\nTO " + (controllerLeft ? "LEFT" : "RIGHT");
+                controllerMoveButton.SetActive(true);
+                canvas.transform.position = new Vector3(
+                    Common.CONTROLLER_AREA_HEIGHT / 2 * (controllerLeft ? -1 : 1),
+                    (Common.BUTTON_AREA_HEIGHT - Common.CONTROLLER_AREA_HEIGHT) / 2, 0);
+                Camera.main.orthographicSize = Common.GAME_SCREEN_HEIGHT / 2
+                    * (ratio <= Common.SCREEN_LANDSCAPE_THRESHOLD ? 1 : ratio / Common.SCREEN_LANDSCAPE_THRESHOLD);
+            }
+            else
+            {
+                quitButton.transform.localPosition = Common.POS_SQUARE_QUIT;
+                restartButton.transform.localPosition = Common.POS_SQUARE_RESTART;
+                simpleInput.transform.localPosition = Common.POS_SQUARE_JOYSTICK;
+                controllerMoveButton.SetActive(false);
+                canvas.transform.position = new Vector3(0, 0, 0);
+                Camera.main.orthographicSize = Common.DEFAULT_ORTHOGRAPHIC_SIZE * Mathf.Max(ratio, 1);
+            }
+            lastScreenWidth = Screen.width;
+            lastScreenHeight = Screen.height;
+        }
+    }
+
+    public void OnControllerMove()
+    {
+        PlayerPrefs.SetInt(Common.SAVEDATA_CONTROLLER_POSITION,
+            (PlayerPrefs.GetInt(Common.SAVEDATA_CONTROLLER_POSITION, 0) + 1) % 2);
+        AdjustScreen(true);
     }
 }
