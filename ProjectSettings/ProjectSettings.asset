@@ -167,7 +167,10 @@ PlayerSettings:
   resolutionScalingMode: 0
   androidSupportedAspectRatio: 1
   androidMaxAspectRatio: 2.1
-  applicationIdentifier: {}
+  applicationIdentifier:
+    Android: com.kuromusha.xetter2020
+    Standalone: com.kuromusha.xetter2020
+    iPhone: com.kuromusha.xetter2020
   buildNumber: {}
   AndroidBundleVersionCode: 1
   AndroidMinSdkVersion: 19
