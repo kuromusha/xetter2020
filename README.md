@@ -1,6 +1,6 @@
 # XETTER 2020
 
-You need [Simple Input System](https://assetstore.unity.com/packages/tools/input-management/simple-input-system-113033) to build this.
+You need [Virtual Plug and Play Joystick](https://assetstore.unity.com/packages/tools/input-management/virtual-plug-and-play-joystick-114288) to build this.
 
 https://xetter.com/
 
