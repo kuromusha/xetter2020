@@ -340,7 +340,7 @@ public class Main : MonoBehaviour
                             }
                         }
 
-                        // check clear again
+                        // check clear
                         if (dotNum <= 0)
                         {
                             // update score
