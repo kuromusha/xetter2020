@@ -738,6 +738,7 @@ public class Main : MonoBehaviour
                 restartButton.transform.localPosition = Vector3.Scale(Common.POS_LANDSCAPE_RESTART, xDirection);
                 controllerMoveButton.transform.localPosition = Vector3.Scale(Common.POS_LANDSCAPE_CONTROLLER_MOVE, xDirection);
                 joystick.transform.localPosition = Vector3.Scale(Common.POS_LANDSCAPE_JOYSTICK, xDirection);
+                joystick.transform.localScale = new Vector3(1, 1, 1);
                 textControllerMove.text = "CONTROLLER\nTO " + (controllerLeft ? "LEFT" : "RIGHT");
                 controllerMoveButton.SetActive(true);
                 canvas.transform.position = joystickCanvas.transform.position = new Vector3(
@@ -748,12 +749,14 @@ public class Main : MonoBehaviour
             }
             else
             {
-                quitButton.transform.localPosition = Common.POS_SQUARE_QUIT;
-                restartButton.transform.localPosition = Common.POS_SQUARE_RESTART;
-                joystick.transform.localPosition = Common.POS_SQUARE_JOYSTICK;
+                quitButton.transform.localPosition = Common.POS_PORTRATE_QUIT;
+                restartButton.transform.localPosition = Common.POS_PORTRATE_RESTART;
+                joystick.transform.localPosition = Common.POS_PORTRATE_JOYSTICK;
+                joystick.transform.localScale = new Vector3(1, 1, 1) / Common.GAME_SCREEN_RATIO;
                 controllerMoveButton.SetActive(false);
-                canvas.transform.position = joystickCanvas.transform.position = new Vector3(0, 0, 0);
-                Camera.main.orthographicSize = Common.DEFAULT_ORTHOGRAPHIC_SIZE * Mathf.Max(ratio, 1);
+                canvas.transform.position = joystickCanvas.transform.position = new Vector3(0, Common.LANDSCAPE_JOYSTICK_DELTA, 0);
+                Camera.main.orthographicSize = (Common.DEFAULT_ORTHOGRAPHIC_SIZE + Common.LANDSCAPE_JOYSTICK_DELTA)
+                    * (ratio <= Common.SCREEN_PORTRATE_THRESHOLD ? 1 : ratio / Common.SCREEN_PORTRATE_THRESHOLD);
             }
             lastScreenWidth = Screen.width;
             lastScreenHeight = Screen.height;
