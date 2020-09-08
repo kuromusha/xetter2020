@@ -58,20 +58,24 @@ public class Common : MonoBehaviour
     public const int BUTTON_AREA_HEIGHT = 40 * SPRITE_SCALE;
     public const int CONTROLLER_AREA_HEIGHT = 80 * SPRITE_SCALE;
     public const int GAP_HEIGHT = 10 * SPRITE_SCALE;
-    public const int LANDSCAPE_BUTTON_X = (Common.GAME_SCREEN_WIDTH + Common.CONTROLLER_AREA_HEIGHT - Common.GAP_HEIGHT) / 2 + Common.GAP_HEIGHT;
+    public const int LANDSCAPE_BUTTON_X = (GAME_SCREEN_WIDTH + CONTROLLER_AREA_HEIGHT - GAP_HEIGHT) / 2 + GAP_HEIGHT;
+    public const int JOYSTICK_HEIGHT = 270;
 
     public const float DURATION = 0.1f;
     public const float WAIT_GAMEOVER = 3f;
-    public const float SCREEN_ADJUST_THRESHOLD = (float)GAME_SCREEN_WIDTH / (GAME_SCREEN_WIDTH + CONTROLLER_AREA_HEIGHT);
-    public const float SCREEN_LANDSCAPE_THRESHOLD = (float)GAME_SCREEN_HEIGHT / (GAME_SCREEN_WIDTH + CONTROLLER_AREA_HEIGHT);
+    public const float GAME_SCREEN_RATIO = (float)GAME_SCREEN_HEIGHT / GAME_SCREEN_WIDTH;
+    public const float LANDSCAPE_JOYSTICK_DELTA = GAME_SCREEN_RATIO * JOYSTICK_HEIGHT / 2;
+    public const float SCREEN_ADJUST_THRESHOLD = (float)(GAME_SCREEN_HEIGHT + BUTTON_AREA_HEIGHT + CONTROLLER_AREA_HEIGHT + LANDSCAPE_JOYSTICK_DELTA * 2) / (GAME_SCREEN_WIDTH + CONTROLLER_AREA_HEIGHT);
+    public const float SCREEN_LANDSCAPE_THRESHOLD = (float)(GAME_SCREEN_HEIGHT) / (GAME_SCREEN_WIDTH + CONTROLLER_AREA_HEIGHT);
+    public const float SCREEN_PORTRATE_THRESHOLD = (float)(GAME_SCREEN_HEIGHT - DIDPLAY_OFFSET_Y + CONTROLLER_AREA_HEIGHT + LANDSCAPE_JOYSTICK_DELTA) * 2 / GAME_SCREEN_WIDTH;
 
-    public static readonly Vector3 POS_SQUARE_QUIT = new Vector3(500, 580, 0);
-    public static readonly Vector3 POS_SQUARE_RESTART = new Vector3(-500, 580, 0);
-    public static readonly Vector3 POS_SQUARE_JOYSTICK = new Vector3(0, -500, 0);
     public static readonly Vector3 POS_LANDSCAPE_QUIT = new Vector3(LANDSCAPE_BUTTON_X, 420, 0);
     public static readonly Vector3 POS_LANDSCAPE_RESTART = new Vector3(LANDSCAPE_BUTTON_X, 260, 0);
     public static readonly Vector3 POS_LANDSCAPE_CONTROLLER_MOVE = new Vector3(LANDSCAPE_BUTTON_X, 100, 0);
     public static readonly Vector3 POS_LANDSCAPE_JOYSTICK = new Vector3(LANDSCAPE_BUTTON_X, -180, 0);
+    public static readonly Vector3 POS_PORTRATE_QUIT = new Vector3(500, 580, 0);
+    public static readonly Vector3 POS_PORTRATE_RESTART = new Vector3(-500, 580, 0);
+    public static readonly Vector3 POS_PORTRATE_JOYSTICK = new Vector3(0, -500 - LANDSCAPE_JOYSTICK_DELTA, 0);
 
     public enum STATUS
     {
