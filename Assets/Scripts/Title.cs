@@ -19,9 +19,11 @@ using UnityEngine.SceneManagement;
 
 public class Title : MonoBehaviour
 {
-    [SerializeField] Button buttonDown = null;
-    [SerializeField] Button buttonUp = null;
-    [SerializeField] Text textStartScene = null;
+#pragma warning disable 649
+    [SerializeField] Button buttonDown;
+    [SerializeField] Button buttonUp;
+    [SerializeField] Text textStartScene;
+#pragma warning restore 649
 
     int startScene, maxStartScene;
 
