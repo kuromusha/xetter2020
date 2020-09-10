@@ -43,7 +43,7 @@ public class Common : MonoBehaviour
     public const int X_BAR_2ND = 27;
     public const int SPRITE_SCALE = 4;
     public const int DISPLAY_OFFSET_X = -160 * SPRITE_SCALE;
-    public const int DIDPLAY_OFFSET_Y = 120 * SPRITE_SCALE;
+    public const int DISPLAY_OFFSET_Y = 120 * SPRITE_SCALE;
     public const int INNER_HIGHT = 20;
     public const int INNER_WIDTH = 38;
     public const int INITIAL_TIME = 1500;
@@ -52,30 +52,36 @@ public class Common : MonoBehaviour
     public const int MAP_OFFSET_Y = 4;
     public const int SORTING_ORDER_MY = 1;
     public const int SORTING_ORDER_OTHERS = 0;
-    public const int DEFAULT_ORTHOGRAPHIC_SIZE = 160 * SPRITE_SCALE;
     public const int GAME_SCREEN_WIDTH = 320 * SPRITE_SCALE;
     public const int GAME_SCREEN_HEIGHT = 200 * SPRITE_SCALE;
-    public const int BUTTON_AREA_HEIGHT = 40 * SPRITE_SCALE;
-    public const int CONTROLLER_AREA_HEIGHT = 80 * SPRITE_SCALE;
-    public const int GAP_HEIGHT = 10 * SPRITE_SCALE;
-    public const int LANDSCAPE_BUTTON_X = (GAME_SCREEN_WIDTH + CONTROLLER_AREA_HEIGHT - GAP_HEIGHT) / 2 + GAP_HEIGHT;
-    public const int JOYSTICK_HEIGHT = 270;
+    public const int GAP_LENGTH = 10 * SPRITE_SCALE;
+    public const int BUTTON_WIDTH = 70 * SPRITE_SCALE;
+    public const int BUTTON_HEIGHT = 30 * SPRITE_SCALE;
+    public const int BUTTON_AREA_HEIGHT = BUTTON_HEIGHT + GAP_LENGTH;
+    public const int JOYSTICK_LENGTH = 75 * SPRITE_SCALE;
+    public const int CONTROLLER_AREA_HEIGHT = JOYSTICK_LENGTH + GAP_LENGTH;
+    public const int LANDSCAPE_BUTTON_X = (GAME_SCREEN_WIDTH + BUTTON_WIDTH) / 2 + GAP_LENGTH;
+    public const int PORTRATE_BUTTON_X = (GAME_SCREEN_WIDTH - BUTTON_WIDTH) / 2;
+    public const int PORTRATE_BUTTON_Y = DISPLAY_OFFSET_Y + GAP_LENGTH + BUTTON_HEIGHT / 2;
+    public const int PORTRATE_ORTHOGRAPHIC_SIZE = (BUTTON_AREA_HEIGHT + GAME_SCREEN_HEIGHT + CONTROLLER_AREA_HEIGHT) / 2;
+    public const int PORTRATE_HEIGHT_DIFF_UP_AND_DOWN = BUTTON_AREA_HEIGHT + DISPLAY_OFFSET_Y * 2 - GAME_SCREEN_HEIGHT - CONTROLLER_AREA_HEIGHT;
+    public const int PORTRATE_JOYSTICK_ADJUST = 30;
 
     public const float DURATION = 0.15f;
     public const float WAIT_GAMEOVER = 3f;
     public const float GAME_SCREEN_RATIO = (float)GAME_SCREEN_HEIGHT / GAME_SCREEN_WIDTH;
-    public const float LANDSCAPE_JOYSTICK_DELTA = GAME_SCREEN_RATIO * JOYSTICK_HEIGHT / 2;
-    public const float SCREEN_ADJUST_THRESHOLD = (float)(GAME_SCREEN_HEIGHT + BUTTON_AREA_HEIGHT + CONTROLLER_AREA_HEIGHT + LANDSCAPE_JOYSTICK_DELTA * 2) / (GAME_SCREEN_WIDTH + CONTROLLER_AREA_HEIGHT);
-    public const float SCREEN_LANDSCAPE_THRESHOLD = (float)(GAME_SCREEN_HEIGHT) / (GAME_SCREEN_WIDTH + CONTROLLER_AREA_HEIGHT);
-    public const float SCREEN_PORTRATE_THRESHOLD = (float)(GAME_SCREEN_HEIGHT - DIDPLAY_OFFSET_Y + CONTROLLER_AREA_HEIGHT + LANDSCAPE_JOYSTICK_DELTA) * 2 / GAME_SCREEN_WIDTH;
+    public const float PORTRATE_JOYSTICK_DELTA = GAME_SCREEN_RATIO * JOYSTICK_LENGTH / 2;
+    public const float SCREEN_ADJUST_THRESHOLD = (float)(GAME_SCREEN_HEIGHT + BUTTON_AREA_HEIGHT + CONTROLLER_AREA_HEIGHT + PORTRATE_JOYSTICK_DELTA * 2) / (GAME_SCREEN_WIDTH + GAP_LENGTH + BUTTON_WIDTH);
+    public const float SCREEN_LANDSCAPE_THRESHOLD = (float)(GAME_SCREEN_HEIGHT) / (GAME_SCREEN_WIDTH + GAP_LENGTH + BUTTON_WIDTH);
+    public const float SCREEN_PORTRATE_THRESHOLD = (float)(BUTTON_AREA_HEIGHT + GAME_SCREEN_HEIGHT + CONTROLLER_AREA_HEIGHT + PORTRATE_JOYSTICK_DELTA * 2) / GAME_SCREEN_WIDTH;
 
-    public static readonly Vector3 POS_LANDSCAPE_QUIT = new Vector3(LANDSCAPE_BUTTON_X, 420, 0);
-    public static readonly Vector3 POS_LANDSCAPE_RESTART = new Vector3(LANDSCAPE_BUTTON_X, 260, 0);
-    public static readonly Vector3 POS_LANDSCAPE_CONTROLLER_MOVE = new Vector3(LANDSCAPE_BUTTON_X, 100, 0);
-    public static readonly Vector3 POS_LANDSCAPE_JOYSTICK = new Vector3(LANDSCAPE_BUTTON_X, -180, 0);
-    public static readonly Vector3 POS_PORTRATE_QUIT = new Vector3(500, 580, 0);
-    public static readonly Vector3 POS_PORTRATE_RESTART = new Vector3(-500, 580, 0);
-    public static readonly Vector3 POS_PORTRATE_JOYSTICK = new Vector3(0, -500 - LANDSCAPE_JOYSTICK_DELTA, 0);
+    public static readonly Vector3 POS_LANDSCAPE_QUIT = new Vector3(LANDSCAPE_BUTTON_X, DISPLAY_OFFSET_Y - BUTTON_HEIGHT / 2, 0);
+    public static readonly Vector3 POS_LANDSCAPE_RESTART = new Vector3(LANDSCAPE_BUTTON_X, DISPLAY_OFFSET_Y - BUTTON_HEIGHT * 3 / 2 - GAP_LENGTH, 0);
+    public static readonly Vector3 POS_LANDSCAPE_CONTROLLER_MOVE = new Vector3(LANDSCAPE_BUTTON_X, DISPLAY_OFFSET_Y - BUTTON_HEIGHT * 5 / 2 - GAP_LENGTH * 2, 0);
+    public static readonly Vector3 POS_LANDSCAPE_JOYSTICK = new Vector3(LANDSCAPE_BUTTON_X - (JOYSTICK_LENGTH - BUTTON_WIDTH) / 2, DISPLAY_OFFSET_Y - BUTTON_HEIGHT * 3 - GAP_LENGTH * 2 - JOYSTICK_LENGTH / 2 - PORTRATE_JOYSTICK_ADJUST, 0);
+    public static readonly Vector3 POS_PORTRATE_QUIT = new Vector3(-PORTRATE_BUTTON_X, PORTRATE_BUTTON_Y, 0);
+    public static readonly Vector3 POS_PORTRATE_RESTART = new Vector3(PORTRATE_BUTTON_X, PORTRATE_BUTTON_Y, 0);
+    public static readonly Vector3 POS_PORTRATE_JOYSTICK = new Vector3(0, DISPLAY_OFFSET_Y - GAME_SCREEN_HEIGHT - GAP_LENGTH - JOYSTICK_LENGTH / 2 - PORTRATE_JOYSTICK_DELTA, 0);
 
     public enum STATUS
     {

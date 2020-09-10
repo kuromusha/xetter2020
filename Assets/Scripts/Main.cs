@@ -223,7 +223,7 @@ public class Main : MonoBehaviour
                     image.transform.SetParent(canvas.transform, false);
                     image.transform.localPosition = new Vector3(
                         Common.DISPLAY_OFFSET_X + (x + (inner ? Common.MAP_OFFSET_X : 0) + i) * Common.SPRITE_UNIT_SIZE + diff,
-                        Common.DIDPLAY_OFFSET_Y - (y + (inner ? Common.MAP_OFFSET_Y : 0) + j) * Common.SPRITE_UNIT_SIZE - diff, 0);
+                        Common.DISPLAY_OFFSET_Y - (y + (inner ? Common.MAP_OFFSET_Y : 0) + j) * Common.SPRITE_UNIT_SIZE - diff, 0);
                     image.GetComponent<RectTransform>().sizeDelta = new Vector2(size, size);
                     if (!inner)
                     {
@@ -744,8 +744,8 @@ public class Main : MonoBehaviour
                 textControllerMove.text = "CONTROLLER\nTO " + (controllerLeft ? "LEFT" : "RIGHT");
                 controllerMoveButton.SetActive(true);
                 canvas.transform.position = joystickCanvas.transform.position = new Vector3(
-                    Common.CONTROLLER_AREA_HEIGHT / 2 * (controllerLeft ? -1 : 1),
-                    (Common.BUTTON_AREA_HEIGHT - Common.CONTROLLER_AREA_HEIGHT) / 2, 0);
+                    (Common.BUTTON_WIDTH + Common.GAP_LENGTH) / 2 * (controllerLeft ? -1 : 1),
+                    (Common.DISPLAY_OFFSET_Y - Common.GAME_SCREEN_HEIGHT) / 4, 0);
                 Camera.main.orthographicSize = Common.GAME_SCREEN_HEIGHT / 2
                     * (ratio <= Common.SCREEN_LANDSCAPE_THRESHOLD ? 1 : ratio / Common.SCREEN_LANDSCAPE_THRESHOLD);
             }
@@ -756,8 +756,9 @@ public class Main : MonoBehaviour
                 joystick.transform.localPosition = Common.POS_PORTRATE_JOYSTICK;
                 joystick.transform.localScale = new Vector3(1, 1, 1) / Common.GAME_SCREEN_RATIO;
                 controllerMoveButton.SetActive(false);
-                canvas.transform.position = joystickCanvas.transform.position = new Vector3(0, Common.LANDSCAPE_JOYSTICK_DELTA, 0);
-                Camera.main.orthographicSize = (Common.DEFAULT_ORTHOGRAPHIC_SIZE + Common.LANDSCAPE_JOYSTICK_DELTA)
+                canvas.transform.position = joystickCanvas.transform.position = new Vector3(0,
+                    Common.PORTRATE_JOYSTICK_DELTA - Common.PORTRATE_HEIGHT_DIFF_UP_AND_DOWN / 2, 0); ;
+                Camera.main.orthographicSize = (Common.PORTRATE_ORTHOGRAPHIC_SIZE + Common.PORTRATE_JOYSTICK_DELTA)
                     * (ratio <= Common.SCREEN_PORTRATE_THRESHOLD ? 1 : ratio / Common.SCREEN_PORTRATE_THRESHOLD);
             }
             lastScreenWidth = Screen.width;
