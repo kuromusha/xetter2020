@@ -61,7 +61,7 @@ public class Common : MonoBehaviour
     public const int LANDSCAPE_BUTTON_X = (GAME_SCREEN_WIDTH + CONTROLLER_AREA_HEIGHT - GAP_HEIGHT) / 2 + GAP_HEIGHT;
     public const int JOYSTICK_HEIGHT = 270;
 
-    public const float DURATION = 0.1f;
+    public const float DURATION = 0.15f;
     public const float WAIT_GAMEOVER = 3f;
     public const float GAME_SCREEN_RATIO = (float)GAME_SCREEN_HEIGHT / GAME_SCREEN_WIDTH;
     public const float LANDSCAPE_JOYSTICK_DELTA = GAME_SCREEN_RATIO * JOYSTICK_HEIGHT / 2;
