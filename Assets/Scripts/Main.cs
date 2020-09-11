@@ -741,7 +741,7 @@ public class Main : MonoBehaviour
                 controllerMoveButton.transform.localPosition = Vector3.Scale(Common.POS_LANDSCAPE_CONTROLLER_MOVE, xDirection);
                 joystick.transform.localPosition = Vector3.Scale(Common.POS_LANDSCAPE_JOYSTICK, xDirection);
                 joystick.transform.localScale = new Vector3(1, 1, 1);
-                textControllerMove.text = "CONTROLLER\nTO " + (controllerLeft ? "LEFT" : "RIGHT");
+                textControllerMove.text = $"TO {(controllerLeft ? "LEFT" : "RIGHT")}";
                 controllerMoveButton.SetActive(true);
                 canvas.transform.position = joystickCanvas.transform.position = new Vector3(
                     (Common.BUTTON_WIDTH + Common.GAP_LENGTH) / 2 * (controllerLeft ? -1 : 1),
