@@ -173,7 +173,7 @@ PlayerSettings:
     iPhone: com.kuromusha.xetter2020
   buildNumber:
     iPhone: 2
-  AndroidBundleVersionCode: 2
+  AndroidBundleVersionCode: 3
   AndroidMinSdkVersion: 19
   AndroidTargetSdkVersion: 29
   AndroidPreferredInstallLocation: 1
