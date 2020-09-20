@@ -32,11 +32,10 @@ public class Main : MonoBehaviour
     [SerializeField] Button restartButton;
     [SerializeField] Button quitButton;
     [SerializeField] Canvas canvas;
-    [SerializeField] Canvas joystickCanvas;
     [SerializeField] GameObject controllerMoveButton;
-    [SerializeField] GameObject joystick;
     [SerializeField] GameObject textCongratulations;
     [SerializeField] GameObject textGameOver;
+    [SerializeField] Image joystick;
     [SerializeField] Sprite spriteBlock;
     [SerializeField] Sprite spriteDot;
     [SerializeField] Sprite spriteMyb;
@@ -276,6 +275,23 @@ public class Main : MonoBehaviour
                         // inpuit & move
                         float inX = Input.GetAxisRaw("Horizontal");
                         float inY = Input.GetAxisRaw("Vertical");
+                        if (inX == 0 && inY == 0 && Input.GetMouseButton(0))
+                        {
+                            Vector3 touchPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                            touchPos.z = 0;
+                            Vector3 touchDirection = touchPos - joystick.transform.position;
+                            if (touchDirection.magnitude <= joystick.rectTransform.rect.width / 2 * joystick.transform.localScale.x)
+                            {
+                                if (Mathf.Abs(touchDirection.x) > Mathf.Abs(touchDirection.y))
+                                {
+                                    inX = touchDirection.x > 0 ? 1 : -1;
+                                }
+                                else
+                                {
+                                    inY = touchDirection.y > 0 ? 1 : -1;
+                                }
+                            }
+                        }
                         int dMyPosX = 0, dMyPosY = 0;
                         Sprite sprite = null;
 
@@ -743,7 +759,7 @@ public class Main : MonoBehaviour
                 joystick.transform.localScale = new Vector3(1, 1, 1);
                 textControllerMove.text = $"TO {(controllerLeft ? "LEFT" : "RIGHT")}";
                 controllerMoveButton.SetActive(true);
-                canvas.transform.position = joystickCanvas.transform.position = new Vector3(
+                canvas.transform.position = new Vector3(
                     (Common.BUTTON_WIDTH + Common.GAP_LENGTH) / 2 * (controllerLeft ? -1 : 1),
                     (Common.DISPLAY_OFFSET_Y - Common.GAME_SCREEN_HEIGHT) / 4, 0);
                 Camera.main.orthographicSize = Common.GAME_SCREEN_HEIGHT / 2
@@ -756,8 +772,7 @@ public class Main : MonoBehaviour
                 joystick.transform.localPosition = Common.POS_PORTRATE_JOYSTICK;
                 joystick.transform.localScale = new Vector3(1, 1, 1) / Common.GAME_SCREEN_RATIO;
                 controllerMoveButton.SetActive(false);
-                canvas.transform.position = joystickCanvas.transform.position = new Vector3(0,
-                    Common.PORTRATE_JOYSTICK_DELTA - Common.PORTRATE_HEIGHT_DIFF_UP_AND_DOWN / 2, 0); ;
+                canvas.transform.position = new Vector3(0, Common.PORTRATE_JOYSTICK_DELTA - Common.PORTRATE_HEIGHT_DIFF_UP_AND_DOWN / 2, 0);
                 Camera.main.orthographicSize = (Common.PORTRATE_ORTHOGRAPHIC_SIZE + Common.PORTRATE_JOYSTICK_DELTA)
                     * (ratio <= Common.SCREEN_PORTRATE_THRESHOLD ? 1 : ratio / Common.SCREEN_PORTRATE_THRESHOLD);
             }

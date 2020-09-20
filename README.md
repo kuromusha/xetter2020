@@ -1,7 +1,5 @@
 # XETTER 2020
 
-You need [Virtual Plug and Play Joystick](https://assetstore.unity.com/packages/tools/input-management/virtual-plug-and-play-joystick-114288) to build this.
-
 https://xetter.com/
 
 ---
