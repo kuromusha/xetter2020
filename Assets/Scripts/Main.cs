@@ -277,9 +277,7 @@ public class Main : MonoBehaviour
                         float inY = Input.GetAxisRaw("Vertical");
                         if (inX == 0 && inY == 0 && Input.GetMouseButton(0))
                         {
-                            Vector3 touchPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-                            touchPos.z = 0;
-                            Vector3 touchDirection = touchPos - joystick.transform.position;
+                            Vector2 touchDirection = Camera.main.ScreenToWorldPoint(Input.mousePosition) - joystick.transform.position;
                             if (touchDirection.magnitude <= joystick.rectTransform.rect.width / 2 * joystick.transform.localScale.x)
                             {
                                 if (Mathf.Abs(touchDirection.x) > Mathf.Abs(touchDirection.y))
