@@ -275,18 +275,26 @@ public class Main : MonoBehaviour
                         // inpuit & move
                         float inX = Input.GetAxisRaw("Horizontal");
                         float inY = Input.GetAxisRaw("Vertical");
-                        if (inX == 0 && inY == 0 && Input.GetMouseButton(0))
+                        if (inX == 0 && inY == 0)
                         {
-                            Vector2 touchDirection = Camera.main.ScreenToWorldPoint(Input.mousePosition) - joystick.transform.position;
-                            if (touchDirection.magnitude <= joystick.rectTransform.rect.width / 2 * joystick.transform.localScale.x)
+                            for (int i = 0; i < Input.touchCount; i++)
                             {
-                                if (Mathf.Abs(touchDirection.x) > Mathf.Abs(touchDirection.y))
+                                Touch touch = Input.GetTouch(i);
+                                if (touch.phase == TouchPhase.Began || touch.phase == TouchPhase.Moved || touch.phase == TouchPhase.Stationary)
                                 {
-                                    inX = touchDirection.x > 0 ? 1 : -1;
-                                }
-                                else
-                                {
-                                    inY = touchDirection.y > 0 ? 1 : -1;
+                                    Vector2 touchDirection = Camera.main.ScreenToWorldPoint(touch.position) - joystick.transform.position;
+                                    if (touchDirection.magnitude <= joystick.rectTransform.rect.width / 2 * joystick.transform.localScale.x)
+                                    {
+                                        if (Mathf.Abs(touchDirection.x) > Mathf.Abs(touchDirection.y))
+                                        {
+                                            inX = touchDirection.x > 0 ? 1 : -1;
+                                        }
+                                        else
+                                        {
+                                            inY = touchDirection.y > 0 ? 1 : -1;
+                                        }
+                                        break;
+                                    }
                                 }
                             }
                         }
