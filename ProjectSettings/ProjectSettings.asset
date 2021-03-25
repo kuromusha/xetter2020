@@ -801,19 +801,57 @@ PlayerSettings:
   gcIncremental: 0
   assemblyVersionValidation: 1
   gcWBarrierValidation: 0
-  apiCompatibilityLevelPerPlatform: {}
+  apiCompatibilityLevelPerPlatform:
+    WSA: 6
   m_RenderingPath: 1
   m_MobileRenderingPath: 1
-  metroPackageName: Template_2D
-  metroPackageVersion: 
-  metroCertificatePath: 
+  metroPackageName: XETTER2020
+  metroPackageVersion: 1.3.1.0
+  metroCertificatePath: Assets/WSATestCertificate.pfx
   metroCertificatePassword: 
-  metroCertificateSubject: 
-  metroCertificateIssuer: 
-  metroCertificateNotAfter: 0000000000000000
-  metroApplicationDescription: Template_2D
-  wsaImages: {}
-  metroTileShortName: 
+  metroCertificateSubject: kuromusha
+  metroCertificateIssuer: kuromusha
+  metroCertificateNotAfter: 00d3d1950540d801
+  metroApplicationDescription: You can clear each scene by eating all dots in the
+    scene. There are 30 scenes in the game.
+  wsaImages:
+    65636: Assets/Icons/StoreLogo.scale-100.png
+    65661: Assets/Icons/StoreLogo.scale-125.png
+    65686: Assets/Icons/StoreLogo.scale-150.png
+    65736: Assets/Icons/StoreLogo.scale-200.png
+    65936: Assets/Icons/StoreLogo.scale-400.png
+    131272: Assets/Icons/SplashScreen.scale-200.png
+    2031632: Assets/Icons/Square44x44Logo.altform-lightunplated_targetsize-16.png
+    2031640: Assets/Icons/Square44x44Logo.altform-lightunplated_targetsize-24.png
+    2031648: Assets/Icons/Square44x44Logo.altform-lightunplated_targetsize-32.png
+    2031664: Assets/Icons/Square44x44Logo.altform-lightunplated_targetsize-48.png
+    2031716: Assets/Icons/Square44x44Logo.scale-100.png
+    2031741: Assets/Icons/Square44x44Logo.scale-125.png
+    2031766: Assets/Icons/Square44x44Logo.scale-150.png
+    2031816: Assets/Icons/Square44x44Logo.scale-200.png
+    2031872: Assets/Icons/Square44x44Logo.altform-lightunplated_targetsize-256.png
+    2032016: Assets/Icons/Square44x44Logo.scale-400.png
+    2097252: Assets/Icons/SmallTile.scale-100.png
+    2097277: Assets/Icons/SmallTile.scale-125.png
+    2097302: Assets/Icons/SmallTile.scale-150.png
+    2097352: Assets/Icons/SmallTile.scale-200.png
+    2097552: Assets/Icons/SmallTile.scale-400.png
+    2162788: Assets/Icons/Square150x150Logo.scale-100.png
+    2162813: Assets/Icons/Square150x150Logo.scale-125.png
+    2162838: Assets/Icons/Square150x150Logo.scale-150.png
+    2162888: Assets/Icons/Square150x150Logo.scale-200.png
+    2163088: Assets/Icons/Square150x150Logo.scale-400.png
+    2228324: Assets/Icons/LargeTile.scale-100.png
+    2228349: Assets/Icons/LargeTile.scale-125.png
+    2228374: Assets/Icons/LargeTile.scale-150.png
+    2228424: Assets/Icons/LargeTile.scale-200.png
+    2228624: Assets/Icons/LargeTile.scale-400.png
+    2293860: Assets/Icons/Wide310x150Logo.scale-100.png
+    2293885: Assets/Icons/Wide310x150Logo.scale-125.png
+    2293910: Assets/Icons/Wide310x150Logo.scale-150.png
+    2293960: Assets/Icons/Wide310x150Logo.scale-200.png
+    2294160: Assets/Icons/Wide310x150Logo.scale-400.png
+  metroTileShortName: XETTER 2020
   metroTileShowName: 0
   metroMediumTileShowName: 0
   metroLargeTileShowName: 0
