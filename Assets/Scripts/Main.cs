@@ -1,4 +1,4 @@
-﻿// XETTER 2020  Copyright (C) 2020  Ken'ichi Kuromusha
+﻿// XETTER 2020  Copyright (C) 2020-2021  Ken'ichi Kuromusha
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -282,20 +282,15 @@ public class Main : MonoBehaviour
                                 Touch touch = Input.GetTouch(i);
                                 if (touch.phase == TouchPhase.Began || touch.phase == TouchPhase.Moved || touch.phase == TouchPhase.Stationary)
                                 {
-                                    Vector2 touchDirection = Camera.main.ScreenToWorldPoint(touch.position) - joystick.transform.position;
-                                    if (touchDirection.magnitude <= joystick.rectTransform.rect.width / 2 * joystick.transform.localScale.x)
+                                    if(UpdateInXYByInputPosition(touch.position, ref inX, ref inY))
                                     {
-                                        if (Mathf.Abs(touchDirection.x) > Mathf.Abs(touchDirection.y))
-                                        {
-                                            inX = touchDirection.x > 0 ? 1 : -1;
-                                        }
-                                        else
-                                        {
-                                            inY = touchDirection.y > 0 ? 1 : -1;
-                                        }
                                         break;
                                     }
                                 }
+                            }
+                            if (inX == 0 && inY == 0 && Input.GetMouseButton(0))
+                            {
+                                UpdateInXYByInputPosition(Input.mousePosition, ref inX, ref inY);
                             }
                         }
                         int dMyPosX = 0, dMyPosY = 0;
@@ -792,5 +787,25 @@ public class Main : MonoBehaviour
         PlayerPrefs.SetInt(Common.SAVEDATA_CONTROLLER_POSITION,
             (PlayerPrefs.GetInt(Common.SAVEDATA_CONTROLLER_POSITION, 0) + 1) % 2);
         AdjustScreen(true);
+    }
+
+    bool UpdateInXYByInputPosition(Vector2 inputPosition, ref float inX, ref float inY)
+    {
+        Vector2 direction = Camera.main.ScreenToWorldPoint(inputPosition) - joystick.transform.position;
+
+        if (direction.magnitude <= joystick.rectTransform.rect.width / 2 * joystick.transform.localScale.x)
+        {
+            if (Mathf.Abs(direction.x) > Mathf.Abs(direction.y))
+            {
+                inX = direction.x > 0 ? 1 : -1;
+            }
+            else
+            {
+                inY = direction.y > 0 ? 1 : -1;
+            }
+            return true;
+        }
+
+        return false;
     }
 }

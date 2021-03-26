@@ -806,14 +806,13 @@ PlayerSettings:
   m_RenderingPath: 1
   m_MobileRenderingPath: 1
   metroPackageName: XETTER2020
-  metroPackageVersion: 1.3.1.0
+  metroPackageVersion: 1.3.2.0
   metroCertificatePath: Assets/WSATestCertificate.pfx
   metroCertificatePassword: 
   metroCertificateSubject: kuromusha
   metroCertificateIssuer: kuromusha
   metroCertificateNotAfter: 00d3d1950540d801
-  metroApplicationDescription: You can clear each scene by eating all dots in the
-    scene. There are 30 scenes in the game.
+  metroApplicationDescription: A dot eating game.
   wsaImages:
     65636: Assets/Icons/StoreLogo.scale-100.png
     65661: Assets/Icons/StoreLogo.scale-125.png
@@ -865,7 +864,11 @@ PlayerSettings:
     a: 1}
   metroSplashScreenUseBackgroundColor: 0
   platformCapabilities: {}
-  metroTargetDeviceFamilies: {}
+  metroTargetDeviceFamilies:
+    Desktop: True
+    Holographic: True
+    Mobile: True
+    Team: True
   metroFTAName: 
   metroFTAFileTypes: []
   metroProtocolName: 
