@@ -150,7 +150,7 @@ PlayerSettings:
     Standalone: com.kuromusha.xetter2020
     iPhone: com.kuromusha.xetter2020
   buildNumber:
-    Standalone: 0
+    Standalone: 2
     iPhone: 0
     tvOS: 0
   overrideDefaultApplicationIdentifier: 1
