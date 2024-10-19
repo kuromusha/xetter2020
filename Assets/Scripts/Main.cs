@@ -1,4 +1,4 @@
-﻿// XETTER 2020  Copyright (C) 2020-2021  Ken'ichi Kuromusha
+﻿// XETTER 2020  Copyright (C) 2020-2024  Ken'ichi Kuromusha
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -513,13 +513,8 @@ public class Main : MonoBehaviour
             case Common.STATUS.CLEAR:
                 if (!audioClear.isPlaying)
                 {
-                    // update SAVEDATA_MAX_SCENE
-                    if (++scene > PlayerPrefs.GetInt(Common.SAVEDATA_MAX_SCENE, 1))
-                    {
-                        PlayerPrefs.SetInt(Common.SAVEDATA_MAX_SCENE, scene);
-                    }
                     // check all clear
-                    if (scene <= Common.MAX_SCENE)
+                    if (++scene <= Common.MAX_SCENE)
                     {
                         // next scene
                         PlayerPrefs.SetInt(Common.SAVEDATA_START_SCENE, scene);
