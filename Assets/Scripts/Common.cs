@@ -1,4 +1,4 @@
-﻿// XETTER 2020  Copyright (C) 2020  Ken'ichi Kuromusha
+﻿// XETTER 2020  Copyright (C) 2020-2024  Ken'ichi Kuromusha
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -18,7 +18,6 @@ using UnityEngine;
 public class Common : MonoBehaviour
 {
     public const string SAVEDATA_START_SCENE = "scene";
-    public const string SAVEDATA_MAX_SCENE = "max";
     public const string SAVEDATA_HISH_SCORE = "high";
     public const string SAVEDATA_CONTROLLER_POSITION = "controller";
     public const string SCENE_MAIN = "Main";

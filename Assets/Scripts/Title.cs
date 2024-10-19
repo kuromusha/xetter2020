@@ -1,4 +1,4 @@
-﻿// XETTER 2020  Copyright (C) 2020  Ken'ichi Kuromusha
+﻿// XETTER 2020  Copyright (C) 2020-2024  Ken'ichi Kuromusha
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -25,13 +25,12 @@ public class Title : MonoBehaviour
     [SerializeField] Text textStartScene;
 #pragma warning restore 649
 
-    int startScene, maxStartScene;
+    int startScene;
 
     // Start is called before the first frame update
     void Start()
     {
         startScene = PlayerPrefs.GetInt(Common.SAVEDATA_START_SCENE, 1);
-        maxStartScene = System.Math.Min(PlayerPrefs.GetInt(Common.SAVEDATA_MAX_SCENE, 1), Common.MAX_SCENE);
         RewriteStartScene();
     }
 
@@ -60,12 +59,12 @@ public class Title : MonoBehaviour
         {
             startScene = 1;
         }
-        else if (startScene > maxStartScene)
+        else if (startScene > Common.MAX_SCENE)
         {
-            startScene = maxStartScene;
+            startScene = Common.MAX_SCENE;
         }
         textStartScene.text = $"From Scene {startScene}";
-        buttonUp.interactable = startScene < maxStartScene;
+        buttonUp.interactable = startScene < Common.MAX_SCENE;
         buttonDown.interactable = startScene > 1;
     }
 }
