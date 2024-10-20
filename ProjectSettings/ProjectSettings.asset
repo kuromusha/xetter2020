@@ -167,12 +167,12 @@ PlayerSettings:
     Standalone: com.kuromusha.xetter2020
     iPhone: com.kuromusha.xetter2020
   buildNumber:
-    Standalone: 4
+    Standalone: 5
     VisionOS: 0
     iPhone: 0
     tvOS: 0
   overrideDefaultApplicationIdentifier: 1
-  AndroidBundleVersionCode: 10
+  AndroidBundleVersionCode: 11
   AndroidMinSdkVersion: 23
   AndroidTargetSdkVersion: 34
   AndroidPreferredInstallLocation: 1
@@ -575,7 +575,13 @@ PlayerSettings:
   m_BuildTargetGroupLightmapSettings: []
   m_BuildTargetGroupLoadStoreDebugModeSettings: []
   m_BuildTargetNormalMapEncoding: []
-  m_BuildTargetDefaultTextureCompressionFormat: []
+  m_BuildTargetDefaultTextureCompressionFormat:
+  - serializedVersion: 3
+    m_BuildTarget: Android
+    m_Formats: 01000000
+  - serializedVersion: 3
+    m_BuildTarget: iOS
+    m_Formats: 03000000
   playModeTestRunnerEnabled: 0
   runPlayModeTestAsEditModeTest: 0
   actionOnDotNetUnhandledException: 1
@@ -884,7 +890,7 @@ PlayerSettings:
   metroCertificatePassword: 
   metroCertificateSubject: kuromusha
   metroCertificateIssuer: kuromusha
-  metroCertificateNotAfter: 80d4b7ff369ada01
+  metroCertificateNotAfter: 00c060d02141dc01
   metroApplicationDescription: A dot eating game.
   wsaImages:
     65636: Assets/Icons/StoreLogo.scale-100.png
