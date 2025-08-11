@@ -1,4 +1,4 @@
-﻿// XETTER 2020  Copyright (C) 2020-2024  Ken'ichi Kuromusha
+﻿// XETTER 2020  Copyright (C) 2020-2025  Ken'ichi Kuromusha
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -237,6 +237,30 @@ public class Main : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // check start button
+        if (Input.GetButtonDown("Start") ||
+            Input.GetKeyDown(KeyCode.Delete))
+        {
+            OnClickRestart();
+            return;
+        }
+
+        // check quit button
+        if (Input.GetKeyDown(KeyCode.JoystickButton6) ||
+            Input.GetKeyDown(KeyCode.Escape))
+        {
+            OnClickQuit();
+            return;
+        }
+
+        // check L/R buttons
+        int controllerPosition = PlayerPrefs.GetInt(Common.SAVEDATA_CONTROLLER_POSITION, 0);
+        if ((Input.GetKeyDown(KeyCode.JoystickButton4) || Input.GetKeyDown(KeyCode.L)) && controllerPosition == 0 ||
+            (Input.GetKeyDown(KeyCode.JoystickButton5) || Input.GetKeyDown(KeyCode.R)) && controllerPosition == 1)
+        {
+            OnControllerMove();
+        }
+
         AdjustScreen();
         timeElapsed += Time.deltaTime;
         switch (status)
@@ -275,6 +299,11 @@ public class Main : MonoBehaviour
                         // inpuit & move
                         float inX = Input.GetAxisRaw("Horizontal");
                         float inY = Input.GetAxisRaw("Vertical");
+                        if (inX == 0 && inY == 0)
+                        {
+                            inX = Input.GetAxisRaw("DPad_X");
+                            inY = Input.GetAxisRaw("DPad_Y");
+                        }
                         if (inX == 0 && inY == 0)
                         {
                             for (int i = 0; i < Input.touchCount; i++)

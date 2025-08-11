@@ -1,4 +1,4 @@
-﻿// XETTER 2020  Copyright (C) 2020-2024  Ken'ichi Kuromusha
+﻿// XETTER 2020  Copyright (C) 2020-2025  Ken'ichi Kuromusha
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -26,6 +26,7 @@ public class Title : MonoBehaviour
 #pragma warning restore 649
 
     int startScene;
+    float prevX, prevY, prevDx, prevDy;
 
     // Start is called before the first frame update
     void Start()
@@ -66,5 +67,43 @@ public class Title : MonoBehaviour
         textStartScene.text = $"From Scene {startScene}";
         buttonUp.interactable = startScene < Common.MAX_SCENE;
         buttonDown.interactable = startScene > 1;
+    }
+
+    void Update()
+    {
+        // check start button
+        if (Input.GetButtonDown("Start") ||
+            Input.GetKeyDown(KeyCode.Space) ||
+            Input.GetKeyDown(KeyCode.Return))
+        {
+            OnClickStart();
+            return;
+        }
+
+        // check up/down buttons
+        float inX = Input.GetAxisRaw("Horizontal");
+        float inY = Input.GetAxisRaw("Vertical");
+        float inDx = Input.GetAxisRaw("DPad_X");
+        float inDy = Input.GetAxisRaw("DPad_Y");
+        if (Input.GetKeyDown(KeyCode.JoystickButton4) ||
+            prevX > -Common.APAD_THRESHOLD && inX <= -Common.APAD_THRESHOLD ||
+            prevY < Common.APAD_THRESHOLD && inY >= Common.APAD_THRESHOLD ||
+            prevDx > -Common.DPAD_THRESHOLD && inDx <= -Common.DPAD_THRESHOLD ||
+            prevDy < Common.DPAD_THRESHOLD && inDy >= Common.DPAD_THRESHOLD)
+        {
+            OnClickUp();
+        }
+        if (Input.GetKeyDown(KeyCode.JoystickButton5) ||
+            prevX < Common.APAD_THRESHOLD && inX >= Common.APAD_THRESHOLD ||
+            prevY > -Common.APAD_THRESHOLD && inY <= -Common.APAD_THRESHOLD ||
+            prevDx < Common.DPAD_THRESHOLD && inDx >= Common.DPAD_THRESHOLD ||
+            prevDy > -Common.DPAD_THRESHOLD && inDy <= -Common.DPAD_THRESHOLD)
+        {
+            OnClickDown();
+        }
+        prevX = inX;
+        prevY = inY;
+        prevDx = inDx;
+        prevDy = inDy;
     }
 }

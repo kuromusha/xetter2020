@@ -1,4 +1,4 @@
-﻿// XETTER 2020  Copyright (C) 2020-2024  Ken'ichi Kuromusha
+﻿// XETTER 2020  Copyright (C) 2020-2025  Ken'ichi Kuromusha
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -75,6 +75,8 @@ public class Common : MonoBehaviour
     public const float SCREEN_ADJUST_THRESHOLD = PORTRATE_SCREEN_HEIGHT / LANDSCAPE_SCREEN_WIDTH;
     public const float SCREEN_LANDSCAPE_THRESHOLD = (float)(GAME_SCREEN_HEIGHT) / LANDSCAPE_SCREEN_WIDTH;
     public const float SCREEN_PORTRATE_THRESHOLD = PORTRATE_SCREEN_HEIGHT / GAME_SCREEN_WIDTH;
+    public const float APAD_THRESHOLD = 0.95f;
+    public const float DPAD_THRESHOLD = 0.5f;
 
     public static readonly Vector3 POS_LANDSCAPE_QUIT = new Vector3(LANDSCAPE_BUTTON_X, DISPLAY_OFFSET_Y - BUTTON_HEIGHT * 3 / 2 - GAP_LENGTH, 0);
     public static readonly Vector3 POS_LANDSCAPE_RESTART = new Vector3(LANDSCAPE_BUTTON_X, DISPLAY_OFFSET_Y - BUTTON_HEIGHT / 2, 0);
