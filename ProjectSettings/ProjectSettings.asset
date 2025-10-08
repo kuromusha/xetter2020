@@ -141,7 +141,7 @@ PlayerSettings:
   loadStoreDebugModeEnabled: 0
   visionOSBundleVersion: 1.0
   tvOSBundleVersion: 1.0
-  bundleVersion: 2.2.0
+  bundleVersion: 2.2.1
   preloadedAssets: []
   metroInputSource: 0
   wsaTransparentSwapchain: 0
@@ -168,7 +168,7 @@ PlayerSettings:
     Standalone: com.kuromusha.xetter2020
     iPhone: com.kuromusha.xetter2020
   buildNumber:
-    Standalone: 5
+    Standalone: 6
     VisionOS: 0
     iPhone: 0
     tvOS: 0
@@ -894,13 +894,14 @@ PlayerSettings:
   m_RenderingPath: 1
   m_MobileRenderingPath: 1
   metroPackageName: XETTER2020
-  metroPackageVersion: 2.1.0.0
+  metroPackageVersion: 2.2.1.0
   metroCertificatePath: Assets/WSATestCertificate.pfx
   metroCertificatePassword: 
   metroCertificateSubject: kuromusha
   metroCertificateIssuer: kuromusha
   metroCertificateNotAfter: 00c060d02141dc01
-  metroApplicationDescription: A dot eating game.
+  metroApplicationDescription: An action-puzzle game where you collect all dots,
+    avoid enemies, and clear 30 unique scenes.
   wsaImages:
     65636: Assets/Icons/StoreLogo.scale-100.png
     65661: Assets/Icons/StoreLogo.scale-125.png
