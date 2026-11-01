@@ -912,12 +912,12 @@ PlayerSettings:
   m_RenderingPath: 1
   m_MobileRenderingPath: 1
   metroPackageName: XETTER2020
-  metroPackageVersion: 2.2.1.0
+  metroPackageVersion: 2.3.3.0
   metroCertificatePath: Assets/WSATestCertificate.pfx
   metroCertificatePassword: 
   metroCertificateSubject: kuromusha
   metroCertificateIssuer: kuromusha
-  metroCertificateNotAfter: 00c060d02141dc01
+  metroCertificateNotAfter: 80a609768788de01
   metroApplicationDescription: An action-puzzle game where you collect all dots,
     avoid enemies, and clear 30 unique scenes.
   wsaImages:
