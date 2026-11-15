@@ -1,4 +1,4 @@
-﻿// XETTER 2020  Copyright (C) 2020-2025  Ken'ichi Kuromusha
+﻿// XETTER 2020  Copyright (C) 2020-2026  Ken'ichi Kuromusha
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -67,6 +67,7 @@ public class Common : MonoBehaviour
     public const int PORTRATE_GAME_SCREEN_BOTTOM = DISPLAY_OFFSET_Y - GAME_SCREEN_HEIGHT;
     public const int PORTRATE_HEIGHT_DIFF_UP_AND_DOWN = BUTTON_AREA_HEIGHT + DISPLAY_OFFSET_Y + PORTRATE_GAME_SCREEN_BOTTOM - CONTROLLER_AREA_HEIGHT;
 
+    public const float JOYSTICK_DEAD_ZONE = 0.2f;
     public const float DURATION = 0.15f;
     public const float WAIT_GAMEOVER = 3f;
     public const float GAME_SCREEN_RATIO = (float)GAME_SCREEN_HEIGHT / GAME_SCREEN_WIDTH;

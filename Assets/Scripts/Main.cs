@@ -1,4 +1,4 @@
-﻿// XETTER 2020  Copyright (C) 2020-2025  Ken'ichi Kuromusha
+﻿// XETTER 2020  Copyright (C) 2020-2026  Ken'ichi Kuromusha
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -178,9 +178,9 @@ public class Main : MonoBehaviour
     {
         // check max num
         if (numDictionary.ContainsKey(character) &&
-            numDictionary[character] >= posDictionary[character].Length)
+            numDictionary[character] >= posDictionary[character].GetLength(0))
         {
-            return;
+            throw new System.InvalidOperationException($"Scene {scene}: too many '{character}' objects.");
         }
         // update sceneMap
         if (inner)
@@ -615,6 +615,10 @@ public class Main : MonoBehaviour
 
     public void OnClickRestart()
     {
+        if (status != Common.STATUS.NORMAL)
+        {
+            return;
+        }
         DecreaseLeftMyNumber(true);
     }
 
@@ -817,8 +821,14 @@ public class Main : MonoBehaviour
     {
         Vector2 direction = Camera.main.ScreenToWorldPoint(inputPosition) - joystick.transform.position;
 
-        if (direction.magnitude <= joystick.rectTransform.rect.width / 2 * joystick.transform.localScale.x)
+        float radius = joystick.rectTransform.rect.width / 2 * joystick.transform.localScale.x;
+        if (direction.magnitude <= radius)
         {
+            inX = inY = 0;
+            if (direction.magnitude <= radius * Common.JOYSTICK_DEAD_ZONE)
+            {
+                return true;
+            }
             if (Mathf.Abs(direction.x) > Mathf.Abs(direction.y))
             {
                 inX = direction.x > 0 ? 1 : -1;
